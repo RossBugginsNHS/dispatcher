@@ -1,4 +1,33 @@
-# ASP.NET Core Minimal API Serverless Application
+# ASPDOTNET Github dispatcher app
+
+## Github Dispatcher specifics
+
+* Register app in GitHub
+* install into both source and destination repos
+* in source, create a `dispatches.yml` in the root.
+* when the source workflow completes, it will trigger the target workflow in the target repository (in the same org).
+
+### Example dispatches file
+
+```yml
+triggers:
+  - source: jekyll-gh-pages.yml
+    targets:
+      - repository: MyTargetRepo
+        workflow: jekyll-gh-pages-2.yml
+```
+
+### Local development
+
+* Use ngrok or similar
+* dotnet F5 debug in vscode
+
+### Dev details
+
+* dotnet 8 project
+* deployable to aws lambda (See below)
+
+## ASP.NET Core Minimal API Serverless Application
 
 This project shows how to run an ASP.NET Core Web API project as an AWS Lambda exposed through Amazon API Gateway. The NuGet package [Amazon.Lambda.AspNetCoreServer](https://www.nuget.org/packages/Amazon.Lambda.AspNetCoreServer) contains a Lambda function that is used to translate requests from API Gateway into the ASP.NET Core framework and then the responses from ASP.NET Core back to API Gateway.
 
@@ -53,10 +82,3 @@ Deploy application
     dotnet lambda deploy-serverless
 ```
 
-## Github Dispatcher specifics
-
-* Register app in GitHub
-
-### Local development
-
-* Use ngrok or similar
