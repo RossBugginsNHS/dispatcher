@@ -1,0 +1,5 @@
+triggers:
+  - source: jekyll-gh-pages.yml
+    targets:
+      - repository: RossBugginsNHS
+        workflow: jekyll-gh-pages-2.yml

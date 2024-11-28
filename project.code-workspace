@@ -3,6 +3,9 @@
     {
       "name": "Repository Template",
       "path": "."
+    },
+    {
+      "path": "src/githubdispatcher"
     }
   ]
 }
