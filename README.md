@@ -4,7 +4,15 @@ This app can be used to trigger workflows in a repository (the target) after the
 
 * The app needs installing in any repositories that are going to be sources of triggers, and also any that are going to be targets.
 
-## Github Dispatcher specifics
+## Live app deployment / availability
+
+* This app is **NOT** currently running as a live Github app. It will need self hosting and deploying in github for evaluation.
+
+
+## What code should I look at to see how this works?
+
+Look at [WebhookEventProcessor.cs](src/githubdispatcher/Processors/WebhookEventProcessor.cs) to see the basics of what this does
+## Github dispatcher specifics
 
 * Register app in GitHub
 * install into both source and destination repos
@@ -38,6 +46,9 @@ triggers:
 
 ### Local development
 
+* Need to register a github app
+* Generate a private key
+* Configure github app with permissions of Dispatch Read/Write and Issue Read/Write
 * Use ngrok or similar
 * dotnet F5 debug in vscode
 
