@@ -1,5 +1,9 @@
 # ASPDOTNET Github dispatcher app
 
+This app can be used to trigger workflows in a repository (the target) after they have fished in another (the source).
+
+* The app needs installing in any repositories that are going to be sources of triggers, and also any that are going to be targets.
+
 ## Github Dispatcher specifics
 
 * Register app in GitHub
@@ -7,7 +11,15 @@
 * in source, create a `dispatches.yml` in the root.
 * when the source workflow completes, it will trigger the target workflow in the target repository (in the same org).
 
+## App design
+
+* Dotnet 8 project
+* Hostable as an AWS Lambda
+
 ### Example dispatches file
+
+This would be in the source repo. When the app detects a workflow finished, it looks for this and then will do any
+required dispatching.
 
 ```yml
 triggers:
@@ -16,6 +28,13 @@ triggers:
       - repository: MyTargetRepo
         workflow: jekyll-gh-pages-2.yml
 ```
+
+## Todos
+
+* Currently this soruce repo controlls what external workflows it will trigger
+* Could easily add it that it could be destination based config
+* Add config for both source and target repos to control if they want their workflows triggering by specific repos
+* Check to see if .NET AOT and trimming work with this to improve cold starts
 
 ### Local development
 
