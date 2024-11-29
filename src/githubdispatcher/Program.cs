@@ -16,7 +16,7 @@ builder.Logging
   .AddFilter("*", LogLevel.Trace)
   .SetMinimumLevel(LogLevel.Trace);
 builder.Services
-  .AddSingleton<WebhookEventProcessor, MyWebhookEventProcessor>()
+  .AddSingleton<WebhookEventProcessor, WebhookEventProcessor>()
   .AddSingleton<ClientSetup>()
   .AddOptions<GitHubDispatcherOptions>().BindConfiguration(GitHubDispatcherOptions.Name);
 builder.Services.AddControllers();
