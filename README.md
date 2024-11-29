@@ -51,6 +51,7 @@ triggers:
 * Configure github app with permissions of Dispatch Read/Write and Issue Read/Write
 * Use ngrok or similar
 * dotnet F5 debug in vscode
+* rename .env.txt to .env and set values accordingly to your github app instance.
 
 ### Dev details
 
