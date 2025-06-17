@@ -9,5 +9,8 @@
     "**/.ruby-lsp": true,
     "bin": true,
     "obj": true
-  }
+  },
+  "appService.preDeployTask": "publish-release",
+  "appService.deploySubpath": "bin/Release/net8.0/publish",
+  "appService.defaultWebAppToDeploy": "/subscriptions/4b95e0b4-c3b3-4eff-9b7b-cc737b6d9cbd/resourceGroups/nhsedispatcher_group/providers/Microsoft.Web/sites/nhsedispatcher"
 }
