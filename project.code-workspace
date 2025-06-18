@@ -9,6 +9,17 @@
     },
     {
       "path": "tests/githubdispatcher.tests"
+    },
+    {
+      "path": "notneeded"
     }
   ]
+  ,
+  "settings": {
+    "files.exclude": {
+      "src": true,
+       "notneeded": true,
+          "ContextsDemo": true
+        }
+        }
 }
