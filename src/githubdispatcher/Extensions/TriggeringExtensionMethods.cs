@@ -10,11 +10,12 @@ public static class TriggeringExtensionMethods
   public static IServiceCollection AddGitHubDispatcher(this IServiceCollection services, Action<GitHubDispatcherOptions> options)
   {
     _ = services
-
-      .AddSingleton<WebhookEventProcessor, MyDispaterWebhookEventProcessor>()
+      .AddTransient<Issues>()
+      .AddTransient<Dispatches>()
+      .AddTransient<Triggering>()
+      .AddTransient<WorkFlowRunCompletedHandler>()
+      .AddSingleton<WebhookEventProcessor, GithubWorkflowEventProcessor>()
       .AddSingleton<ClientSetup>();
-
-
     _ = services.AddOptions<GitHubDispatcherOptions>().BindConfiguration(GitHubDispatcherOptions.Name).Configure(options);
     return services;
   }

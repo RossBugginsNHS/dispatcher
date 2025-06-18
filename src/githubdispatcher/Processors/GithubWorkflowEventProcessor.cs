@@ -8,18 +8,19 @@ using Octokit.Webhooks.Events.InstallationRepositories;
 using Octokit.Webhooks.Events.InstallationTarget;
 
 
-public class MyDispaterWebhookEventProcessor : Octokit.Webhooks.WebhookEventProcessor
+public class GithubWorkflowEventProcessor : Octokit.Webhooks.WebhookEventProcessor
 {
 
-  ILogger<Runner> Logger;
-  ClientSetup cs;
-  public MyDispaterWebhookEventProcessor(ILogger<Runner> logger, ClientSetup cs) : base()
+  private readonly ILogger<GithubWorkflowEventProcessor> _logger;
+  private readonly ClientSetup _cs;
+  private readonly WorkFlowRunCompletedHandler _runner;
+
+  public GithubWorkflowEventProcessor(ILogger<GithubWorkflowEventProcessor> logger, ClientSetup cs, WorkFlowRunCompletedHandler runner) : base()
   {
-    Logger = logger;
-    this.cs = cs;
+    _logger = logger;
+    _cs = cs;
+    _runner = runner;
   }
-
-
 
   protected override async Task ProcessWorkflowRunWebhookAsync(
     WebhookHeaders headers,
@@ -28,8 +29,7 @@ public class MyDispaterWebhookEventProcessor : Octokit.Webhooks.WebhookEventProc
   {
     if ((string)action == WorkflowRunActionValue.Completed)
     {
-      var runner = new Runner(Logger, cs);
-      await runner.HandleWorkFlowRunCompleted(workflowRunEvent);
+      await _runner.HandleWorkFlowRunCompleted(workflowRunEvent);
     }
     ;
   }

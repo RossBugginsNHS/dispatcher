@@ -33,15 +33,23 @@ public class ClientSetup(IOptions<GitHubDispatcherOptions> dispatcherOptions)
         return appClient;
     }
 
-    public async Task<GitHubClient> GetInstallationClient(GitHubClient appClient, long installId)
+    public async Task<GitHubClient> GetInstallationClient(long installationId)
     {
-        var response = await appClient.GitHubApps.CreateInstallationToken(installId);
-        var installationClient = new GitHubClient(new ProductHeaderValue(appHeader))
-        {
-            Credentials = new Credentials(response.Token)
-        };
-        return installationClient;
+      var appClient = this.GetAppClient();
+      var install = await appClient.GitHubApps.GetInstallationForCurrent(installationId);
+      var installClient = await this.GetInstallationClient(appClient, install.Id);
+      return installClient;
     }
+
+    public async Task<GitHubClient> GetInstallationClient(GitHubClient appClient, long installId)
+  {
+    var response = await appClient.GitHubApps.CreateInstallationToken(installId);
+    var installationClient = new GitHubClient(new ProductHeaderValue(appHeader))
+    {
+      Credentials = new Credentials(response.Token)
+    };
+    return installationClient;
+  }
 
     public string Token()
     {
