@@ -21,7 +21,10 @@ public static class RunWebApp
       .AddFilter("*", LogLevel.Trace)
       .SetMinimumLevel(LogLevel.Trace);
 
-    builder.Services.AddGitHubDispatcher();
+    builder.Services.AddGitHubDispatcher(o =>
+    {
+
+    });
 
     builder.Services.AddControllers();
     var app = builder.Build();

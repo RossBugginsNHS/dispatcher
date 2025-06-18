@@ -18,20 +18,26 @@ using Microsoft.Extensions.Options;
 public class ClientSetup(IOptions<GitHubDispatcherOptions> dispatcherOptions)
 {
     private readonly int tokenLifetime = dispatcherOptions.Value.TokenLifetime;
-    private readonly string rsaPrivateKey = File.ReadAllText(dispatcherOptions.Value.Pem);
+  private readonly string rsaPrivateKey = GetPemContent(dispatcherOptions);
     private readonly string appId = dispatcherOptions.Value.AppId;
     private readonly string appHeader =  dispatcherOptions.Value.AppHeader;
 
-    public GitHubClient GetAppClient()
+
+  public static string GetPemContent(IOptions<GitHubDispatcherOptions> dispatcherOptions)
+  {
+    return dispatcherOptions.Value.PemContent ?? File.ReadAllText(dispatcherOptions.Value.Pem);
+  }
+
+  public GitHubClient GetAppClient()
+  {
+    var jwtToken = Token();
+    var tokenAuth = new Credentials(jwtToken, AuthenticationType.Bearer);
+    var appClient = new GitHubClient(new ProductHeaderValue(appHeader))
     {
-        var jwtToken = Token();
-        var tokenAuth = new Credentials(jwtToken, AuthenticationType.Bearer);
-        var appClient = new GitHubClient(new ProductHeaderValue(appHeader))
-        {
-            Credentials = tokenAuth
-        };
-        return appClient;
-    }
+      Credentials = tokenAuth
+    };
+    return appClient;
+  }
 
     public async Task<GitHubClient> GetInstallationClient(long installationId)
     {

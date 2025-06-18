@@ -23,7 +23,9 @@
 
     <!-- <None Include="notify.pem" CopyToOutputDirectory="Always" /> -->
     <None Include="dispatches.yml" CopyToOutputDirectory="Always" />
-    <!-- <None Include="robu6-dispatcher.2024-11-14.private-key.pem" CopyToOutputDirectory="Always"  /> -->
+    <None Include="robu6-dispatcher.2024-11-14.private-key.pem" Condition="Exists('robu6-dispatcher.2024-11-14.private-key.pem')">
+  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+</None>
 
   </ItemGroup>
 </Project>

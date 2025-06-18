@@ -4,9 +4,10 @@ public record GitHubDispatcherOptions(
   string AppId,
   string AppHeader,
   string Pem,
+  string PemContent,
   int TokenLifetime)
 {
-  public GitHubDispatcherOptions() : this(default, default, default, default, default, default)
+  public GitHubDispatcherOptions() : this(default, default, default, default, default, default, default)
   {
 
   }
