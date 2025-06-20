@@ -6,35 +6,79 @@ This app can be used to trigger workflows in a repository (the target) after the
 
 ## Live app deployment / availability
 
-* This app is **NOT** currently running as a live Github app. It will need self hosting and deploying in github for evaluation.
-
+* This app is  running as a live PoC Github app hosted on azure. NOT FOR PRODUCTION.
+* It can need self hosting and deploying in github for evaluation.
 
 ## What code should I look at to see how this works?
 
 Look at [WebhookEventProcessor.cs](src/githubdispatcher/Processors/WebhookEventProcessor.cs) to see the basics of what this does
+
 ## Github dispatcher specifics
 
 * Register app in GitHub
 * install into both source and destination repos
-* in source, create a `dispatches.yml` in the root.
+* in source, create a `dispatching.yml` in the root.
 * when the source workflow completes, it will trigger the target workflow in the target repository (in the same org).
 
 ## App design
 
 * Dotnet 8 project
-* Hostable as an AWS Lambda
 
-### Example dispatches file
+### Example dispatching file
+
+#### Source
 
 This would be in the source repo. When the app detects a workflow finished, it looks for this and then will do any
 required dispatching.
 
 ```yml
-triggers:
-  - source: jekyll-gh-pages.yml
+outbound:
+  - source:
+      workflow: ci.yml
     targets:
-      - repository: MyTargetRepo
-        workflow: jekyll-gh-pages-2.yml
+      - repository: my-target-repo
+        workflow: cd.yml
+
+
+```
+
+#### Target
+
+This would be in the target repo. When the app detects a workflow finished, it looks for this and then will do any
+required dispatching.
+
+```yml
+
+inbound:
+  - source:
+      repository: my-source-repo
+      workflow: ci.yml
+    targets:
+      -  workflow: cd.yml
+
+```
+
+#### Chained
+
+They can be chained, eg the initial target could have:
+
+```yml
+
+inbound:
+  - source:
+      repository: my-source-repo
+      workflow: ci.yml
+    targets:
+      -  workflow: cd.yml
+
+outbound:
+  - source:
+      workflow: cd.yml
+    targets:
+      - repository: my-target-repo-2
+        workflow: cd-2.yml
+
+
 ```
 
 ## Todos
