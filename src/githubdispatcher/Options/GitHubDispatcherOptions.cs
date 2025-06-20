@@ -4,12 +4,20 @@ public record GitHubDispatcherOptions(
   string AppId,
   string AppHeader,
   string Pem,
-  string PemContent,
   int TokenLifetime)
 {
-  public GitHubDispatcherOptions() : this(default, default, default, default, default, default, default)
-  {
 
+string _pemContent = default;
+ public string PemContent => _pemContent;
+  public GitHubDispatcherOptions() : this(default, default, default, default, default, default)
+  {
   }
+
+  public GitHubDispatcherOptions SetPemContent(string pemContent)
+  {
+    _pemContent = pemContent ?? throw new ArgumentNullException(nameof(pemContent), "PemContent cannot be null.");
+    return this;
+  }
+
   public static string Name = "GITHUB_DISPATCHER";
 }

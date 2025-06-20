@@ -1,0 +1,13 @@
+outbound:
+  - source:
+      workflow: ci.yml
+    targets:
+      - repository: rossbuggins
+        workflow: cd.yml
+
+inbound:
+  - source:
+      repository: rossbuggins
+      workflow: ci.yml
+    targets:
+      -  workflow: cd.yml

@@ -5,37 +5,20 @@ using Octokit.Webhooks;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
+//await new Testing().TestItOut();
+
 await RunWebApp.Run(args);
 
-public static class RunWebApp
+
+public class Testing
 {
-  public static async Task Run(string[] args)
+  public async Task TestItOut()
   {
+    var contents = File.ReadAllText("dispatching.yml");
+     IDeserializer Deserialiser = new DeserializerBuilder()
+.WithNamingConvention(UnderscoredNamingConvention.Instance)
+.Build();
 
-    var builder = WebApplication.CreateBuilder(args);
-
-    builder.Logging
-      .ClearProviders()
-      .AddConsole()
-      .AddFilter(null, LogLevel.Trace)
-      .AddFilter("*", LogLevel.Trace)
-      .SetMinimumLevel(LogLevel.Trace);
-
-    builder.Services.AddGitHubDispatcher(o =>
-    {
-
-    });
-
-    builder.Services.AddControllers();
-    var app = builder.Build();
-
-    app
-      .UseHttpsRedirection()
-      .UseAuthorization();
-    app.MapControllers();
-
-    app.UseGitHubDispatcher();
-
-    await app.RunAsync();
+    var lists = Deserialiser.Deserialize<TriggersList>(contents);
   }
 }

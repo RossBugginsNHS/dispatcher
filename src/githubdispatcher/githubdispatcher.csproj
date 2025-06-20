@@ -3,12 +3,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <AWSProjectType>Lambda</AWSProjectType>
-    <!-- This property makes the build directory similar to a publish directory and helps the AWS .NET Lambda Mock Test Tool find project dependencies. -->
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <!-- Generate ready to run images during publishing to improvement cold starts. -->
-    <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="GitHubJwt" Version="0.0.6" />
@@ -22,7 +16,7 @@
   <ItemGroup>
 
     <!-- <None Include="notify.pem" CopyToOutputDirectory="Always" /> -->
-    <None Include="dispatches.yml" CopyToOutputDirectory="Always" />
+    <None Include="dispatching.yml" CopyToOutputDirectory="Always" />
     <None Include="robu6-dispatcher.2024-11-14.private-key.pem" Condition="Exists('robu6-dispatcher.2024-11-14.private-key.pem')">
   <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 </None>
