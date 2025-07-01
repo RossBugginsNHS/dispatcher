@@ -1,24 +1,10 @@
-using System.Collections.Concurrent;
-using System.Text;
-using Octokit;
-using Octokit.Webhooks;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 
-//await new Testing().TestItOut();
-
-await RunWebApp.Run(args);
-
-
-public class Testing
-{
-  public async Task TestItOut()
+await RunWebApp.Run(
+  args,
+  builder =>
   {
-    var contents = File.ReadAllText("dispatching.yml");
-     IDeserializer Deserialiser = new DeserializerBuilder()
-.WithNamingConvention(UnderscoredNamingConvention.Instance)
-.Build();
+    builder.Services.AddOpenTelemetry().UseAzureMonitor();
+    builder.Services.AddSingleton<RunningDocker>();
+  });
 
-    var lists = Deserialiser.Deserialize<TriggersList>(contents);
-  }
-}

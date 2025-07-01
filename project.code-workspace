@@ -13,13 +13,11 @@
     {
       "path": "notneeded"
     }
-  ]
-  ,
+  ],
   "settings": {
     "files.exclude": {
-      "src": true,
-       "notneeded": true,
-          "ContextsDemo": true
-        }
-        }
+      "notneeded": true,
+      "ContextsDemo": true
+    }
+  }
 }

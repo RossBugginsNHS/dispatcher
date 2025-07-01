@@ -1,11 +1,10 @@
 public static class RunWebApp
 {
-  public static async Task Run(string[] args)
+  public static async Task Run(string[] args, Action<WebApplicationBuilder> configure = null )
   {
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Logging
-      .ClearProviders()
       .AddConsole()
       .AddFilter(null, LogLevel.Trace)
       .AddFilter("*", LogLevel.Trace)
@@ -19,8 +18,13 @@ public static class RunWebApp
     builder.Services.AddControllers();
     builder.Services.AddAuthentication();
 
-    var app = builder.Build();
+    if(configure != null)
+    {
+      configure(builder);
+    }
 
+    var app = builder.Build();
+    app.Services.GetService<ILogger<Program>>().LogInformation("Starting GitHub Dispatcher Web App");
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.MapControllers();

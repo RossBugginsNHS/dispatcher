@@ -1,0 +1,16 @@
+repositories:
+  - name: helloworld
+    description: hopefully from template.
+  - name: helloworld2
+    description: hopefully from template.22222
+  - name: helloworld3
+    description: hopefully from template.22222
+repoTeams:
+  - teamName: helloworld-team
+teamMemberships:
+  - teamName: helloworld-team
+    userName: rossbugginsNHS
+teamAssignments:
+  - teamName: helloworld-team
+    repoName: helloworld
+    role: maintain
